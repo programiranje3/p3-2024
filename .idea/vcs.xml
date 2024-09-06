@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../british_invasion" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../decision_trees" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../green_day" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../spotipy-getting-started" vcs="Git" />
+  </component>
+</project>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../british_invasion/.idea/british_invasion.iml" filepath="$PROJECT_DIR$/../british_invasion/.idea/british_invasion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../decision_trees/.idea/decision_trees.iml" filepath="$PROJECT_DIR$/../decision_trees/.idea/decision_trees.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../green_day/.idea/green_day.iml" filepath="$PROJECT_DIR$/../green_day/.idea/green_day.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/p3-2024.iml" filepath="$PROJECT_DIR$/.idea/p3-2024.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../p3-2024v/.idea/p3-2024v.iml" filepath="$PROJECT_DIR$/../p3-2024v/.idea/p3-2024v.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spotipy-getting-started/.idea/spotipy-getting-started.iml" filepath="$PROJECT_DIR$/../spotipy-getting-started/.idea/spotipy-getting-started.iml" />
+    </modules>
+  </component>
+</project>
