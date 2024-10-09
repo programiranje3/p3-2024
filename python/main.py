@@ -57,6 +57,6 @@
 
 #%%
 # Importing from another script
-from inception import *
+from python.inception import *
 # from blankscripts import *
 print(green_day_function())
