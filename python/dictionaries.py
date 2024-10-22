@@ -28,6 +28,40 @@ def demonstrate_dictionaries():
     - using the keys() and values() functions
     """
 
+    # green_day = {}
+    # print(green_day)
+    # print(type(green_day))
+    # print()
+
+    green_day = {'name': 'Green Day', 'city': 'Rodeo, CA', 'year': 1987}
+    print(green_day)
+    print(green_day['name'])
+    print()
+
+    print(green_day.items())
+    for i, j in green_day.items():
+        print(i + ':', j)
+    print()
+
+    from pprint import pprint
+    pprint(green_day, width=1)
+    print()
+
+    green_day['latest tour'] = 2024
+    print(green_day['latest tour'])
+    del green_day['latest tour']
+    print(green_day)
+    print()
+
+    green_day.update({'latest tour': 2024})
+    print(green_day)
+    green_day.update((('guitar and vocals', 'Billy Joe Armstrong'), ('bass', 'Mike Dirnt'), ('drums', 'Tre Cool')))
+    print(green_day)
+    print()
+
+    print(green_day.keys())
+    print(green_day.values())
+
 
 #%%
 # Test demonstrate_dictionaries()
@@ -42,6 +76,28 @@ def sort_dictionary(d, by):
     - using lambda
     """
 
+    # if by.lower() == 'k':
+    #     return dict(sorted(zip(d.keys(), d.values())))
+    # elif by.lower() == 'v':
+    #     return dict(sorted(zip(d.values(), d.keys())))
+    # else:
+    #     return None
+
+    from operator import itemgetter
+    if by.lower() == 'k':
+        return dict(sorted(d.items(), key=itemgetter(0)))
+    elif by.lower() == 'v':
+        return dict(sorted(d.items(), key=itemgetter(1)))
+    else:
+        return None
+
+    # if by.lower() == 'k':
+    #     return dict(sorted(d.items(), key=lambda x: x[0]))
+    # elif by.lower() == 'v':
+    #     return dict(sorted(d.items(), key=lambda x: x[1]))
+    # else:
+    #     return None
+
 
 #%%
 def demonstrate_dict_sorting():
@@ -51,7 +107,14 @@ def demonstrate_dict_sorting():
     # from pprint import pprint         # when sorting by values, pprint doesn't show the resulting dictionary correctly
 
     songs = {3: '21 Guns', 1: 'Wake Me Up When September Ends', 2: 'Boulevard of Broken Dreams'}
-    green_day = {'name': 'Green Day', 'place': 'Rodeo, CA', 'year': 1987}
+    # green_day = {'name': 'Green Day', 'place': 'Rodeo, CA', 'year': 1987}
+    green_day = {'name': 'Green Day', 'place': 'Rodeo, CA', 'year': '1987'}
+
+    # # return sort_dictionary(songs, 'k')
+    # return sort_dictionary(songs, 'v')
+
+    return sort_dictionary(green_day, 'k')
+    # return sort_dictionary(green_day, 'v')
 
 
 #%%
@@ -67,6 +130,8 @@ def dict_comprehension(l1, l2):
     :param l2: a list (or another iterable) of dict values
     :return: a dict created by dict comprehension
     """
+
+    return {k:v for k, v in zip(l1, l2)}
 
 
 #%%
