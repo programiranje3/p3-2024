@@ -11,11 +11,11 @@ import functools
 
 from python.functions import *
 
-pete = 'Pete Townshend'
-roger = 'Roger Daltrey'
-john = 'John Entwistle'
-keith = 'Keith Moon'
-the_who = [pete, roger, john, keith]
+# Setup / Data
+bj = 'Billy Joe Armstrong'
+mike = 'Mike Dirnt'
+tre = 'Tre Cool'
+green_day = [bj, mike, tre]
 
 
 #%%
@@ -72,7 +72,7 @@ def pass_function_as_parameter(f, *args, **kwargs):
     (e.g., if f has a default arg d=4, then the first line of f would be kwargs['d'] = d),
     and then f is called as f(*args, **kwargs), just as if d=4 was always part of **kwargs:
     -------
-    def f(*args, year=1965, **kwargs):
+    def f(*args, year=2004, **kwargs):
         kwargs['year'] = year
 
         print(args)             # result: a tuple of args
@@ -82,7 +82,7 @@ def pass_function_as_parameter(f, *args, **kwargs):
     def g(h, *args, **kwargs):
         return h(*args, **kwargs)
 
-    g(f, 'Pete', 'Townshend', True, birth=1945)
+    g(f, 'Billy Joe', 'Armstrong', True, birth=1972)
     -------
     See https://stackoverflow.com/a/34206138/1899061 for further details.
     """
@@ -90,8 +90,8 @@ def pass_function_as_parameter(f, *args, **kwargs):
 
 #%%
 # Test pass_function_as_parameter(f, *args, **kwargs)
-pass_function_as_parameter(use_all_categories_of_args, 'The Who', *the_who,
-                           start=1964, end=1983)
+pass_function_as_parameter(use_all_categories_of_args, 'Green Day', *green_day,
+                           start=1987, end=3000)
 
 
 #%%
@@ -105,7 +105,7 @@ def return_function(full_name, first_name_flag):
 
 #%%
 # Test return_function(full_name, first_name_flag)
-# f = return_function('John Entwistle', False)          # Listen to The Who: Real Me!!!
+# f = return_function('Mike Dirn', False)
 # print(f())
 
 
@@ -123,7 +123,7 @@ def return_function_with_args(*args):
 # Test return_function_with_args(*args)
 # f = return_function_with_args()
 # f = return_function_with_args(1)
-# print(f('Pete', 'Townshend', 1945))
+# print(f('Billy Joe', 'Armstrong', 1972))
 
 
 #%%
@@ -140,7 +140,7 @@ def a_very_simple_decorator(f):
 
     # def decorator(f):
     #     def g():
-    #         return f('Roger Daltrey')
+    #         return f('Tre Cool')
     #     return g
     #
     # def something(x):
@@ -153,11 +153,11 @@ def a_very_simple_decorator(f):
     # >>> something
     # <function __main__.decorator.<locals>.g()>
     # >>> something()
-    # Roger Daltrey
+    # Tre Cool
 
     # def decorator(f, *args):
     #     def g():
-    #         print('Roger Daltrey')
+    #         print('Tre Cool')
     #         return f(*args)
     #     return g
     #
@@ -167,12 +167,12 @@ def a_very_simple_decorator(f):
     # >>> something(4)
     # 4
     # ...
-    # >>> something = decorator(something, 'Roger Daltrey')
+    # >>> something = decorator(something, 'Tre Cool')
     # >>> something
     # <function __main__.decorator.<locals>.g()>
     # >>> something()
-    # Roger Daltrey
-    # Roger Daltrey
+    # Tre Cool
+    # Tre Cool
 
 
 #%%
@@ -182,15 +182,15 @@ def songs(*args):
 
 
 #%%
-songs('My Generation', 'Pinball Wizard')
+songs('21 Guns', 'The American Dream is Killing Me')
 
 #%%
 # f = a_very_simple_decorator(songs)
-# f('My Generation', 'Pinball Wizard')
+# f('21 Guns', 'The American Dream is Killing Me')
 
 #%%
 # songs = a_very_simple_decorator(songs)
-# songs('My Generation', 'Pinball Wizard')
+# songs('21 Guns', 'The American Dream is Killing Me')
 # print()
 # songs()
 
@@ -214,7 +214,7 @@ def band_details(f_to_decorate):
 #%%
 @band_details
 def print_band(name, *members, **years_active):
-    """Prints the name and the members of a band, assuming that both name and *members are strings.
+    """If not decorated, just prints the name a band, assuming that the name is a string.
     The decorator before the function signature (@members) illustrates how to apply a decorator;
     omit it if decorating manually.
     """
@@ -222,9 +222,9 @@ def print_band(name, *members, **years_active):
 
 #%%
 # Test members(f_to_decorate)
-print_band('The Who', *the_who, )
-print_band('The Who', start=1962, end=1983)
-print_band('The Who', *the_who, start=1962, end=1983)
+print_band('Green Day', *green_day, )
+print_band('Green Day', start=1987, end=3000)
+print_band('Green Day', *green_day, start=1987, end=3000)
 
 #%%
 # Demonstrating the purpose of @functools.wraps(f_to_decorate)

@@ -4,14 +4,13 @@
 
 #%%
 # Setup / Data
-song = 'My Generation'
-year = 1965
+song = 'Wake Me Up When September Ends'
+year = 2004
 
-pete = 'Pete Townshend'
-roger = 'Roger Daltrey'
-john = 'John Entwistle'
-keith = 'Keith Moon'
-the_who = [pete, roger, john, keith]
+bj = 'Billy Joe Armstrong'
+mike = 'Mike Dirnt'
+tre = 'Tre Cool'
+green_day = [bj, mike, tre]
 
 
 #%%
@@ -31,8 +30,7 @@ print(demonstrate_annotations(song, year))
 
 
 #%%
-# def show_song(title, author='Pete Townshend', year: int = 1965):
-def show_song(title, author='Pete Townshend', year: int = 1965):
+def show_song(title, author=bj, year: int = 2004):
 
     """Demonstrates default arguments/parameters.
     - print locals()
@@ -41,7 +39,7 @@ def show_song(title, author='Pete Townshend', year: int = 1965):
 
 
 #%%
-# Test show_song(title, author='Pete Townshend', year: int = 1965)
+# Test def show_song(title, author=bj, year: int = 2004):
 show_song(song)
 
 
@@ -54,8 +52,8 @@ def use_flexible_arg_list(band: str, *members):
 
 #%%
 # Test use_flexible_arg_list(band: str, *members)
-use_flexible_arg_list('The Who', *the_who)
-use_flexible_arg_list('The Who')
+use_flexible_arg_list('Green Day', *green_day)
+use_flexible_arg_list('Green Day')
 
 
 #%%
@@ -67,8 +65,6 @@ def use_all_categories_of_args(band, *members, is_active=True, **details):
 
 #%%
 # Test use_all_categories_of_args(band, *members, is_active=True, **details)
-use_all_categories_of_args('The Who', is_active=True, start=1962, end=1983)
-use_all_categories_of_args('The Who', *the_who, is_active=False,
-                           start=1964, end=1983)
-
-
+use_all_categories_of_args('Green Day', is_active=True, start=1987, end=3000)
+use_all_categories_of_args('Green Day', *green_day, is_active=False,
+                           start=1987, end=3000)
