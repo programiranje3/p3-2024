@@ -105,7 +105,7 @@ def return_function(full_name, first_name_flag):
 
 #%%
 # Test return_function(full_name, first_name_flag)
-# f = return_function('Mike Dirn', False)
+# f = return_function('Mike Dirnt', False)
 # print(f())
 
 
