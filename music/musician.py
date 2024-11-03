@@ -29,18 +29,16 @@ class Musician:
     """
 
     def __init__(self, name, is_band_member=True):
-        self.name = name
-        self.is_band_member = is_band_member
-
+        pass
         # self.__n = 'lll'                                    # 'private' field
         # self._m = 'mmm'
         # self.__immutable_property = 'I am immutable'
 
     def __str__(self):
-        return f'{self.name}, {"band member" if self.is_band_member else "solo musician"}'
+        pass
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__ if isinstance(other, Musician) else False
+        pass
 
     # Properties: 'private' fields/attributes:
     #   @property
@@ -99,8 +97,7 @@ class Musician:
 
 #%%
 # Print objects
-billy_joe = Musician('Billy Joe Armstrong', is_band_member=True)
-print(billy_joe)
+
 
 #%%
 # Run setters and getters in the debugger
@@ -108,7 +105,7 @@ print(billy_joe)
 
 #%%
 # Compare objects
-print(billy_joe == Musician('Billy Joe Armstrong', is_band_member=True))
+
 
 #%%
 # Access data fields/attributes (instance variables),
