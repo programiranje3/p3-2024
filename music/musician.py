@@ -112,9 +112,10 @@ class Musician:
 # including 'private' ones (<object>._Musician__n), 'protected' ones (<object>._Musician__m) and
 # immutable ones (<object>.immutable_property)
 
-# print(keith._Musician__n)
-# print(keith._m)
-# print(keith.immutable_property)
+# billy_joe = Musician('Billy Joe Armstrong')
+# print(billy_joe._Musician__n)
+# print(billy_joe._m)
+# print(billy_joe.immutable_property)
 
 
 #%%
@@ -245,15 +246,15 @@ class Songwriter(Musician):
 #%%
 # Demonstrate inheritance
 # Version 1 - no multiple inheritance
-# keith = Singer('Keith Relf', Vocals.LEAD_VOCALS)
-# print(keith)
+# billy_joe = Singer('Billy Joe Armstrong', Vocals.LEAD_VOCALS)
+# print(billy_joe)
 # print(Singer.__mro__)
-# print(keith == Singer('Keith Relf', Vocals.LEAD_VOCALS))
+# print(billy_joe == Singer('Billy Joe Armstrong', Vocals.LEAD_VOCALS))
 # print()
-# jeff = Songwriter('Jeff Beck', Instrument.LEAD_GUITAR)
-# print(jeff)
-# print(jeff == Songwriter('Jeff Beck', Instrument.LEAD_GUITAR))
-# print(jeff.what_do_you_do())
+# billy_joe = Songwriter('Billy Joe Armstrong', Instrument.LEAD_GUITAR)
+# print(billy_joe)
+# print(billy_joe == Songwriter('Billy Joe Armstrong', Instrument.LEAD_GUITAR))
+# print(billy_joe.what_do_you_do())
 
 #%%
 # Demonstrate method overriding
