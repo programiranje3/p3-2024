@@ -18,9 +18,13 @@ def format_date(a_date):
     https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
     """
 
+    return a_date.strftime(PREFERRED_DATE_FORMAT) if isinstance(a_date, date) else 'unknown'
+
 
 #%%
 # Test format_date(a_date)
+print(format_date(date.today()))
+
 
 #%%
 # Demonstrate pathlib.Path

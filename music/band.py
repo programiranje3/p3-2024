@@ -15,6 +15,7 @@ from datetime import date, datetime, time
 import sys
 
 # from music.musician_module import Musician
+from music.musician import Musician
 from util.utility import format_date, get_project_dir, get_data_dir
 
 from testdata.musicians import *
@@ -30,23 +31,31 @@ class Band:
     # Class variables: like static fields in Java; typically defined and initialized before __init__()
     # Insert a class variable (static field), such as genres, date_pattern,...
 
+    styles = ['punk rock', 'alternative rock']
+
     def __init__(self, name, *members, start=date.today(), end=date.today()):
-        pass
+        self.name = name
+        self.members = members
+        self.start = start
+        self.end = end
 
         # Code to check if the band name is specified correctly (possibly raises BandNameError)
 
         # self.__i = 0                                  # introduce and initialize iterator counter, self.__i
 
     def __str__(self):
-        pass
+        n = self.name + ': ' if self.members else self.name + '; '
+        m = ', '.join([str(m) for m in self.members]) + "; " if self.members else ''
+        s = self.start.year
+        e = self.end.year
+        return f'{n}{m}{s}-{e}'
 
     def __eq__(self, other):
-        pass
         # Musician objects are unhashable, so comparing the members tuples from self and other directly does not work;
         # see https://stackoverflow.com/a/14721133/1899061, https://stackoverflow.com/a/17236824/1899061
         # return self == other if isinstance(other, Band) else False    # No! Musician objects are unhashable!
         # However, this works:
-        # return self.__dict__ == other.__dict__ if isinstance(other, Band) else False
+        return self.__dict__ == other.__dict__ if isinstance(other, Band) else False
 
         # # members must be compared 'both ways', because the two tuples can be of different length
         # m_diff_1 = [x for x in self.members if x not in other.members]
@@ -60,6 +69,7 @@ class Band:
         """It is assumed that a band does not perform together since more than ~60 years ago.
         So, the valid date to denote the start of a band's career is between Jan 01, 1960, and today.
         """
+        return True if date(1954, 7, 5) <= d < date.today() and isinstance(d, date) else False
 
     def __iter__(self):
         """Once __iter__() and __next__() are implemented in a class,
@@ -70,27 +80,43 @@ class Band:
         Alternatively, the iterator counter (self.__i) is introduced and initialized here.
         """
 
-        # self.__i = 0
-        # return self               # sufficient if the iterator counter is introduced and initialized in __init__()
+        self.__i = 0
+        return self               # sufficient if the iterator counter is introduced and initialized in __init__()
 
     def __next__(self):
-        pass
+        if self.__i < len(self.members):
+            m = self.members[self.__i]
+            self.__i += 1
+            return m
+        raise StopIteration
 
 
 #%%
 # Check class variables
-
+print(Band.styles)
 
 #%%
 # Test the basic methods (__init__(), __str__(),...)
-
+green_day = Band('Green Day', *[billyJoeArmstrong, treCool, mikeDirnt],
+                 start=date(1987, 7, 18), end=date.today())
+print(green_day)
 
 #%%
 # Test the date validator (@staticmethod is_date_valid(<date>))
-
+print(Band.is_date_valid(date(1954, 1, 1)))
 
 #%%
 # Test the iterator (initialize it with iter(<band>) and call next(<iterator) in a loop to return all <band> members)
+green_day = Band('Green Day', *[billyJoeArmstrong, treCool, mikeDirnt],
+                 start=date(1987, 7, 18), end=date.today())
+i = iter(green_day)
+while 23:
+    try:
+        print(next(i))
+    except StopIteration:
+        print('Done')
+        break
+# print(next(i))
 
 
 #%%
@@ -100,15 +126,34 @@ def next_member(band):
     A great tutorial on generators: https://realpython.com/introduction-to-python-generators/.
     """
 
+    for m in band.members:
+        input('Next:')
+        yield(m)
+        print('Yeah!')
+
 
 #%%
 # Test next_member(band)
 # (initialize it with next_member(<band>) and call next(<generator>) in a loop to return/generate all <band> members)
-
+green_day = Band('Green Day', *[billyJoeArmstrong, treCool, mikeDirnt],
+                 start=date(1987, 7, 18), end=date.today())
+g = next_member(green_day)
+while 9:
+    try:
+        print(next(g))
+    except StopIteration:
+        break
+# print(next(g)
 
 #%%
 # Demonstrate generator expressions
-
+g = (p for p in range(3))
+# print(g)
+while 2:
+    try:
+        print(next(g))
+    except StopIteration:
+        break
 
 #%%
 # Demonstrate JSON encoding/decoding of Band objects
