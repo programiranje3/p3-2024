@@ -223,22 +223,25 @@ class Singer(Musician):
     # # Version 1, no multiple inheritance; attrs of both superclass and subclass specified explicitly in __init__() -
     # # calling super().__init__(<superclass attrs>) first, then adding self.<specific attr> = <specific attr> lines
     # def __init__(self, name, vocals, is_band_member=True, ):
+    #     super().__init__(name, is_band_member)
+    #     self.vocals = vocals if isinstance(vocals, Vocals) else None
 
     # Version 2, with multiple inheritance; subclass attrs specified in __init__() explicitly, **kwargs for the rest -
     # calling super().__init__(**kwargs) first, then adding self.<specific attr> = <specific attr> lines
     def __init__(self, vocals=Vocals.LEAD_VOCALS, **kwargs):
-        pass
+        super().__init__(**kwargs)
+        self.vocals = vocals if isinstance(vocals, Vocals) else None
 
     def __str__(self):
-        pass
+        return super().__str__() + '; ' + self.vocals.name.lower().replace('_', ' ')
 
     def __eq__(self, other):
-        pass
         # Recommended if inheritance is involved
         # (https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes):
         # if type(other) is type(self):
         #     return self.__dict__ == other.__dict__
         # return False
+        return self.__dict__ == other.__dict__ if isinstance(other, Singer) else False
 
     def play(self, song_title, *args, **kwargs):
         """Overrides the play() method from superclass.
@@ -249,12 +252,13 @@ class Singer(Musician):
         Note that calling super().play() from this method should pass *args and **kwargs, not args and kwargs.
         Here's why: https://stackoverflow.com/a/31197973.
         """
+        return super().play(song_title, *args, **kwargs) + '\nYeah!'
 
     def what_do_you_do(self):
         """Just a simple method to describe the concept of singer.
         """
 
-        pass
+        return f'I am {self.name} and I sing songs.'
 
 
 #%%
@@ -266,27 +270,35 @@ class Songwriter(Musician):
 
     # # Version 1, no multiple inheritance; attrs of both superclass and subclass specified explicitly in __init__() -
     # # calling super().__init__(<superclass attrs>) first, then adding self.<specific attr> = <specific attr> lines
+    # # def __init__(self, name, instrument, is_band_member=True):
     # def __init__(self, name, instrument, is_band_member=True):
+    #     super().__init__(name, is_band_member)
+    #     self.instrument = instrument if isinstance(instrument, Instrument) else None
 
-    # Version 2, with multiple inheritance; subclass attrs specified in __init__() explicitly, **kwargs for the rest -
-    # calling super().__init__(**kwargs) first, then adding self.<specific attr> = <specific attr> lines
+    # # Version 2, with multiple inheritance; subclass attrs specified in __init__() explicitly, **kwargs for the rest -
+    # # calling super().__init__(**kwargs) first, then adding self.<specific attr> = <specific attr> lines
+    # def __init__(self, instrument=Instrument.RHYTHM_GUITAR, **kwargs):
+    #     pass
     def __init__(self, instrument=Instrument.RHYTHM_GUITAR, **kwargs):
-        pass
+        super().__init__(**kwargs)
+        self.instrument = instrument if isinstance(instrument, Instrument) else None
 
     def __str__(self):
-        pass
+        return super().__str__() + '; ' + self.instrument.name.lower().replace('_', ' ')
 
     def __eq__(self, other):
-        pass
         # Recommended if inheritance is involved
         # (https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes):
         # if type(other) is type(self):
         #     return self.__dict__ == other.__dict__
         # return False
+        return self.__dict__ == other.__dict__ if isinstance(other, Songwriter) else False
 
     def what_do_you_do(self):
         """Just a simple method to describe the concept of songwriter.
         """
+
+        return f'I am {self.name} and I write songs.'
 
 
 #%%
@@ -298,17 +310,17 @@ class Songwriter(Musician):
 #   is provided by Python automatically once object.__eq__(self, other) is implemented
 
 #%%
-# Demonstrate inheritance
-# Version 1 - no multiple inheritance
-# billy_joe = Singer('Billy Joe Armstrong', Vocals.LEAD_VOCALS)
+# # Demonstrate inheritance
+# # Version 1 - no multiple inheritance
+# billy_joe = Singer(name='Billy Joe Armstrong', vocals=Vocals.LEAD_VOCALS)
 # print(billy_joe)
 # print(Singer.__mro__)
-# print(billy_joe == Singer('Billy Joe Armstrong', Vocals.LEAD_VOCALS))
+# print(billy_joe == Singer(name='Billy Joe Armstrong', vocals=Vocals.LEAD_VOCALS))
 # print()
-# billy_joe = Songwriter('Billy Joe Armstrong', Instrument.LEAD_GUITAR)
-# print(billy_joe)
-# print(billy_joe == Songwriter('Billy Joe Armstrong', Instrument.LEAD_GUITAR))
-# print(billy_joe.what_do_you_do())
+# # billy_joe = Songwriter(name='Billy Joe Armstrong', instrument=Instrument.LEAD_GUITAR)
+# # print(billy_joe)
+# # print(billy_joe == Songwriter(name='Billy Joe Armstrong', instrument=Instrument.LEAD_GUITAR))
+# # print(billy_joe.what_do_you_do())
 
 #%%
 # Demonstrate method overriding
@@ -326,19 +338,19 @@ class SingerSongwriter(Singer, Songwriter):
 
     def __init__(self, **kwargs):
         # Calling super().__init__(**kwargs) is quite sufficient if there are no subclass-specific attrs
-        pass
+        super().__init__(**kwargs)
 
     def __str__(self):
         # Returning super().__str__() is quite sufficient if there is no need for adding something subclass-specific
-        pass
+        return super().__str__()
 
     def __eq__(self, other):
-        pass
         # Recommended if inheritance is involved
         # (https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes):
         # if type(other) is type(self):
         #     return self.__dict__ == other.__dict__
         # return False
+        return self.__dict__ == other.__dict__ if isinstance(other, SingerSongwriter) else False
 
     def tell(self):
         """What if multiple inheritance requires calling a method with same method name
@@ -346,8 +358,8 @@ class SingerSongwriter(Singer, Songwriter):
         E.g., class C(A, B) and both A and B implement a method with the same name m() in their own ways).
         In that case, call A's version like A.m(self), and B's version like B.m(self).
         """
-        # print(Singer.what_do_you_do(self))
-        # print(Songwriter.what_do_you_do(self))
+        print(Singer.what_do_you_do(self))
+        print(Songwriter.what_do_you_do(self))
 
 
 #%%
@@ -359,17 +371,17 @@ class SingerSongwriter(Singer, Songwriter):
 # Demonstrate inheritance
 # Version 2 - with multiple inheritance
 
-# print(SingerSongwriter.__mro__)
+print(SingerSongwriter.__mro__)
+print()
+bob = SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
+                       instrument=Instrument.RHYTHM_GUITAR, is_band_member=False)
+print(bob)
 # print()
-# bob = SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
-#                        instrument=Instrument.RHYTHM_GUITAR, is_band_member=False)
-# print(bob)
-# # print()
-# # print(bob == SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
-# #                               instrument=Instrument.RHYTHM_GUITAR, is_band_member=False))
-# print()
-#
-# bob.tell()
+# print(bob == SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
+#                               instrument=Instrument.RHYTHM_GUITAR, is_band_member=False))
+print()
+
+bob.tell()
 
 #%%
 # Demonstrate JSON encoding/decoding of simple data types.
@@ -396,8 +408,23 @@ class SingerSongwriter(Singer, Songwriter):
 #%%
 # Single object
 from json_tricks import loads, dumps
+billy_joe = Singer(name='Billy Joe Armstrong', vocals=Vocals.LEAD_VOCALS)
+bj_str = dumps(billy_joe)
+print(bj_str)
+print()
+
+bj = loads(bj_str)
+print(bj == billy_joe)
 
 #%%
 # List of objects
 from json_tricks import loads, dumps
+billy_joe = Singer(name='Billy Joe Armstrong', vocals=Vocals.LEAD_VOCALS)
+bob = SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
+                       instrument=Instrument.RHYTHM_GUITAR, is_band_member=False)
+artists_str = dumps([billy_joe, bob])
+print(artists_str)
+print()
 
+artists = loads(artists_str)
+print(artists == [billy_joe, bob])
