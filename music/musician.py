@@ -408,23 +408,24 @@ bob.tell()
 #%%
 # Single object
 from json_tricks import loads, dumps
-billy_joe = Singer(name='Billy Joe Armstrong', vocals=Vocals.LEAD_VOCALS)
-bj_str = dumps(billy_joe)
-print(bj_str)
+billy_joe = Musician('Billy Joe Armstrong')
+billy_joe_json = dumps(billy_joe, indent=4)
+print(billy_joe_json)
 print()
 
-bj = loads(bj_str)
-print(bj == billy_joe)
+billy_joe_restored = loads(billy_joe_json)
+print(billy_joe_restored)
 
 #%%
 # List of objects
 from json_tricks import loads, dumps
-billy_joe = Singer(name='Billy Joe Armstrong', vocals=Vocals.LEAD_VOCALS)
+billy_joe = Musician('Billy Joe Armstrong')
 bob = SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
                        instrument=Instrument.RHYTHM_GUITAR, is_band_member=False)
-artists_str = dumps([billy_joe, bob])
-print(artists_str)
+musicians_json = dumps([billy_joe, bob], indent=4)
+print(musicians_json)
 print()
 
-artists = loads(artists_str)
-print(artists == [billy_joe, bob])
+musicians_restored = loads(musicians_json)
+for m in musicians_restored:
+    print(m)

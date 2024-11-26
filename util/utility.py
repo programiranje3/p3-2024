@@ -32,12 +32,13 @@ print(format_date(date.today()))
 # - current dir: Path.cwd() (Path('.'), Path() - work well only with absolute(), e.g. Path().absolute())
 # - absolute path: <path>.absolute(), e.g. Path().absolute(), or Path('.').absolute()
 # - parent dir: <path>.parent
+print(Path())
+print(Path('.'))
 print(Path.home())
 print(Path.cwd())
-print(Path.cwd().parent)
-print(Path.cwd().parent.parent)
 print(Path().absolute())
-print(Path('.').absolute())
+print(Path().parent)
+print(Path().absolute().parent)
 
 #%%
 # Demonstrate creating and removing directories
@@ -45,8 +46,10 @@ print(Path('.').absolute())
 #            <newDir>.mkdir(parents=True, exist_ok=True)
 # - remove dir: <dir>.rmdir()                                           # requires the <dir> to be empty
 # - project dir: settings.PROJECT_DIR
-new_dir = Path.cwd().parent / 'data' / 'd'
-new_dir.mkdir(exist_ok=True, parents=True)
+new_dir = Path().parent / 'd1'
+new_dir.mkdir(parents=True, exist_ok=True)
+print(new_dir)
+print(new_dir.absolute())
 new_dir.rmdir()
 
 
@@ -70,7 +73,7 @@ def get_data_dir():
     """
 
     data_dir = get_project_dir() / 'data'
-    data_dir.mkdir(parents=True, exist_ok=True)
+    data_dir.mkdir(exist_ok=True, parents=True)
     return data_dir
 
 
