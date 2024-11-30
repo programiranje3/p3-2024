@@ -331,14 +331,18 @@ print('Done')
 #%%
 # Demonstrate reading from a text file - <infile>.readline(), <infile>.readlines(), <infile>.read()
 file = get_data_dir() / 'bands.txt'
+print(file)
 with open(file, 'r') as f:
-    # while 1:
-    #     try:
-    #         print(f.readline())
-    #     except:
-    #         break
     # print(f.readlines())
-    print(f.read())
+    # print(f.read())
+    lines = ''
+    while True:
+        line = f.readline()
+        if line:
+            lines += line
+        else:
+            break
+print(lines)
 
 #%%
 # Demonstrate writing to a binary file - pickle.dump(<obj>, <outfile>)
@@ -357,3 +361,5 @@ for b in bands_restored:
     print(b)
 
 
+
+#%%
