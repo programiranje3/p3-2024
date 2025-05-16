@@ -17,8 +17,8 @@ from settings import *
 # Getting started
 
 # The Website to work with, i.e. to scrape info from and crawl over it - Ultimate Classic Rock.
-# The starting URL refers to articles about The Beatles.
-start_url = 'https://ultimateclassicrock.com/search/?s=The%20Beatles'
+# The starting URL refers to articles about Green Day.
+start_url = 'https://ultimateclassicrock.com/search/?s=green%20day'
 
 # # Location of the chromedriver used to work with selenium and Chrome;
 # # apparently not necessary if webdriver_manager is used
@@ -31,7 +31,7 @@ start_url = 'https://ultimateclassicrock.com/search/?s=The%20Beatles'
 # Get response text from Response object, using <response>.text
 
 #%%
-# Get BeautifulSoup object from response text, using BeautifulSoup(<response text>, 'html.parser')
+# Get BeautifulSoup object from response text, using BeautifulSoup(<response text>, features='html.parser')
 
 
 #%%
@@ -157,15 +157,23 @@ def get_soup(url: str) -> BeautifulSoup:
 
 from selenium import webdriver
 
-# driver = webdriver.Firefox()
+driver = webdriver.Firefox()
 # driver = webdriver.Edge()
-driver = webdriver.Chrome()         # might not work, depending on the versions of Chrome and chromedriver
+# driver = webdriver.Chrome()         # might not work, depending on the versions of Chrome and chromedriver
 
-# # Once any of these approaches to get the Chrome driver is made to work,
+# # Add-ons for Firefox for headless mode
+# from selenium.webdriver.firefox.options import Options
+#
+# options = Options()
+# options.add_argument("--headless")
+# driver = webdriver.Firefox(options=options)
+
+# # Once any of these approaches to get the Chrome or Firefox driver is made to work,
 # # the following two lines get the page source (the HTML code) and turn it into a BeautifulSoup object:
 #
-# driver.get(start_url)
-# soup = BeautifulSoup(driver.page_source, 'html.parser')
+driver.get(start_url)
+soup = BeautifulSoup(driver.page_source, 'html.parser')
+print(soup)
 # # print('soup created')
 
 # # driver.get(start_url)
@@ -190,6 +198,18 @@ def get_soup_selenium(url: str) -> BeautifulSoup:
     #
     # service=Service(ChromeDriverManager().install())
     # driver = webdriver.Chrome(service=service)
+
+    # from selenium import webdriver
+    #
+    # # Add-ons for Firefox for headless mode
+    # from selenium.webdriver.firefox.options import Options
+    #
+    # options = Options()
+    # options.add_argument("--headless")
+
+    # driver = webdriver.Firefox()
+    # driver = webdriver.Firefox(options=options)
+    # driver.get(url)
 
 
 #%%
@@ -233,21 +253,21 @@ def get_soup_selenium(url: str) -> BeautifulSoup:
 
 
 #%%
-def get_specific_page(start_url: str, page=1) -> str:
+def get_specific_page(url: str, page=1) -> str:
     """Returns the URL of a specific page from a Website where long lists of items are split in multiple pages.
     """
 
 
 #%%
-# Test get_specific_page(start_url, page)
+# Test get_specific_page(url, page)
 
 
 #%%
-def get_next_soup(start_url: str, page=1):
+def get_next_soup(url: str, page=1):
     """Returns the BeautifulSoup object corresponding to a specific page
     in case there are multiple pages that list objects of interest.
     Parameters:
-    - start_url: the starting page/url of a multi-page list of objects
+    - url: the starting page/url of a multi-page list of objects
     - page: the page number of a specific page of a multi-page list of objects
     Essentially, get_next_soup() just returns get_soup(get_specific_page(start_url, page)),
     i.e. converts the result of the call to get_specific_page(start_url, page), which is a string,
@@ -256,18 +276,18 @@ def get_next_soup(start_url: str, page=1):
 
 
 #%%
-# Test get_next_soup(start_url: str, page=1)
+# Test get_next_soup(url: str, page=1)
 
 
 #%%
-def get_next_soup_selenium(start_url: str, page=1):
+def get_next_soup_selenium(url: str, page=1):
     """Returns the BeautifulSoup object corresponding to a specific page
     in case there are multiple pages that list objects of interest, using selenium instead of requests.
     Parameters:
-    - start_url: the starting page/url of a multi-page list of objects
+    - url: the starting page/url of a multi-page list of objects
     - page: the page number of a specific page of a multi-page list of objects
-    Essentially, get_next_soup() just returns get_soup_selenium(get_specific_page(start_url, page)),
-    i.e. converts the result of the call to get_specific_page(start_url, page), which is a string,
+    Essentially, get_next_soup() just returns get_soup_selenium(get_specific_page(url, page)),
+    i.e. converts the result of the call to get_specific_page(url, page), which is a string,
     into a BeautifulSoup object.
     """
 
@@ -292,7 +312,7 @@ def crawl(url: str, max_pages=1):
 #%%
 def get_article_info(article: Tag):
     """
-    Returns structured information about an article related to The Beatles,
+    Returns structured information about an article related to Green Day,
     extracted from a multi-page article list.
     :param article: a bs4.element.Tag representing the entire article
     :return: a 4-tuple of info-items about the article, including:
@@ -308,10 +328,10 @@ def get_article_info(article: Tag):
 
 
 #%%
-def get_article_info_list(start_url: str, max_pages=1):
+def get_article_info_list(url: str, max_pages=1):
     """
-    Returns structured information about articles related to The Beatles from a multi-page article list.
-    :param start_url: the url of the starting page of a multi-page article list
+    Returns structured information about articles related to Green Day from a multi-page article list.
+    :param url: the url of the starting page of a multi-page article list
     :param max_pages: the max number of pages to crawl
     :return: a list of 4-tuples of info-items about the articles from a multi-page article list
     Calls get_article_info() in a loop to collect the list of tuples, each tuple containing the following data:
@@ -325,7 +345,7 @@ def get_article_info_list(start_url: str, max_pages=1):
 
 
 #%%
-# Test get_article_info_list(start_url: str, max_pages=1)
+# Test get_article_info_list(url: str, max_pages=1)
 
 #%%
 # Put everything in a csv file
